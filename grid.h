@@ -11,6 +11,9 @@ typedef struct output_t {
 #define gColCount 128
 #define gRowCount 32
 
+#define gLabelColWidth 20
+#define gLabelRowHeight 1
+
 typedef output_t row_t[gColCount];
 typedef row_t grid_t[gRowCount];
 

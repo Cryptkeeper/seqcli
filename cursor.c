@@ -10,7 +10,24 @@ static bool is_cursor_in_viewport(void) {
     int maxRow, maxCol;
     get_viewport_limits(&maxRow, &maxCol);
 
-    return gCursorRow >= gViewportRow && gCursorRow <= maxRow && gCursorCol >= gViewportCol && gCursorCol <= maxCol;
+    return gCursorRow >= gViewportRow && gCursorRow < maxRow && gCursorCol >= gViewportCol && gCursorCol < maxCol;
+}
+
+void move_cursor_into_viewport(void) {
+    int maxRow, maxCol;
+    get_viewport_limits(&maxRow, &maxCol);
+
+    if (gCursorRow < gViewportRow) {// down shift
+        gCursorRow = gViewportRow;
+    } else if (gCursorRow >= maxRow) {// up shift
+        gCursorRow = maxRow - 1;
+    }
+
+    if (gCursorCol < gViewportCol) {// right shift
+        gCursorCol = gViewportCol;
+    } else if (gCursorCol >= maxCol) {// left shift
+        gCursorCol = maxCol - 1;
+    }
 }
 
 static bool test_cursor_at(int row, int col) {
@@ -61,21 +78,4 @@ bool move_cursor(int rd, int cd) {
     }
 
     return true;
-}
-
-#define clamp(c, m, x) (c < m ? m : (c > x ? x : c))
-
-bool jump_cursor(int rd, int cd) {
-    int row = clamp(gCursorRow + rd, 0, gRowCount);
-    int col = clamp(gCursorCol + cd, 0, gColCount);
-
-    if (row == gCursorRow && col == gCursorCol) {
-        return false;
-    } else {
-        return set_cursor(row, col);
-    }
-}
-
-bool test_cursor(int rd, int cd) {
-    return test_cursor_at(gCursorRow + rd, gCursorCol + cd);
 }

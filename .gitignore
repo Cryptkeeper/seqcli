@@ -10,3 +10,4 @@ Makefile
 
 # dev environment
 .idea
+.DS_Store

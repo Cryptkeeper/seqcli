@@ -7,9 +7,6 @@
 int gViewportRow = 0;
 int gViewportCol = 0;
 
-#define gLabelColWidth 20
-#define gLabelRowHeight 1
-
 void get_viewport_limits(int *maxRow, int *maxCol) {
     int y, x;
     getmaxyx(curscr, y, x);
@@ -48,6 +45,14 @@ static bool set_viewport(int row, int col) {
     }
 }
 
+bool move_cursor_into_viewport(void);// cursor.h
+
 bool move_viewport(int rd, int cd) {
-    return set_viewport(gViewportRow + rd, gViewportCol + cd);
+    bool viewportMoved = set_viewport(gViewportRow + rd, gViewportCol + cd);
+
+    if (viewportMoved) {
+        move_cursor_into_viewport();
+    }
+
+    return viewportMoved;
 }

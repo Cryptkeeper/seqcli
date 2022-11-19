@@ -85,7 +85,8 @@ static void draw_grid(void) {
         }
 
         snprintf(gLabelBuffer, sizeof(gLabelBuffer), gLabelFormat, rowData->name);
-        addstr(gLabelBuffer);
+
+        mvaddstr(gLabelRowHeight + (row - gViewportRow), 0, gLabelBuffer);
 
         addch(' ');
         addch(get_row_icon(row));
@@ -111,8 +112,6 @@ static void draw_grid(void) {
             addch(icon_ch);
             attroff(COLOR_PAIR(colorPair));
         }
-
-        addch('\n');
     }
 
     static int redrawCounter = 0;
@@ -120,7 +119,12 @@ static void draw_grid(void) {
     addch('\n');
     addch('\n');
     redrawCounter++;
-    printw("redraw: %d\n\nrow: %d\ncol: %d\nselecting: %d\n\nviewport: %d %d\n", redrawCounter, gCursorRow, gCursorCol, gSelection.active, gViewportRow, gViewportCol);
+    printw("redraw count: %d\n"
+           "cursor: %d %d\n"
+           "is selecting: %d\n"
+           "viewport: %d %d\n"
+           "limits: %d %d\n",
+           redrawCounter, gCursorRow, gCursorCol, gSelection.active, gViewportRow, gViewportCol, maxRow, maxCol);
 }
 
 int main() {
