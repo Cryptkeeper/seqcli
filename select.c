@@ -2,7 +2,6 @@
 
 #include "cursor.h"
 
-
 bool is_selected(const select_t *select, int row, int col) {
     if (!select->active) return false;
 
