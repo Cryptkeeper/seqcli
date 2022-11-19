@@ -3,6 +3,6 @@
 
 #include "screen.h"
 
-bool init_gridscreen(struct screen_type_t *screen, const char *filepath);
+bool init_gridscreen(struct screen_t *screen, const char *filepath);
 
 #endif//SEQCLI_GRIDSCREEN_H

@@ -7,7 +7,7 @@ typedef bool (*keypress_fn_t)(int ch, bool *interrupt);
 
 typedef void (*draw_fn_t)(void);
 
-struct screen_type_t {
+struct screen_t {
     const char *title;
     keypress_fn_t keypressFn;
     draw_fn_t drawFn;

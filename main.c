@@ -6,7 +6,7 @@
 #include "gridscreen.h"
 #include "screen.h"
 
-static struct screen_type_t gCurrentScreen;
+static struct screen_t gCurrentScreen;
 
 int main() {
     if (!init_gridscreen(&gCurrentScreen, "testfile.seq")) {

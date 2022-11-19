@@ -241,7 +241,7 @@ static void draw_grid(void) {
            redrawCounter, gCursorRow, gCursorCol, gSelection.active, gViewportRow, gViewportCol, maxRow, maxCol);
 }
 
-bool init_gridscreen(struct screen_type_t *screen, const char *filepath) {
+bool init_gridscreen(struct screen_t *screen, const char *filepath) {
     screen->title = filepath;
     screen->keypressFn = handle_keypress;
     screen->drawFn = draw_grid;
