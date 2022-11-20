@@ -159,7 +159,7 @@ static chtype get_row_icon(int row) {
     return ' ';
 }
 
-static void draw_grid(void) {
+static void draw(void) {
     attron(COLOR_PAIR(PAIR_DEFAULT));
 
     mvaddstr(0, 0, "OUTPUT LIST:      ");
@@ -244,7 +244,7 @@ static void draw_grid(void) {
 bool init_gridscreen(struct screen_t *screen, const char *filepath) {
     screen->title = filepath;
     screen->keypressFn = handle_keypress;
-    screen->drawFn = draw_grid;
+    screen->drawFn = draw;
 
     return true;
 }

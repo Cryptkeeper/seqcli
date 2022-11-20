@@ -8,4 +8,5 @@ void init_color_pairs(void) {
     init_pair(PAIR_HIGHLIGHT, COLOR_WHITE, COLOR_BLUE);
     init_pair(PAIR_ERROR, COLOR_WHITE, COLOR_RED);
     init_pair(PAIR_CURSOR, COLOR_WHITE, COLOR_YELLOW);
+    init_pair(PAIR_TYPING, COLOR_GREEN, COLOR_BLACK);
 }
