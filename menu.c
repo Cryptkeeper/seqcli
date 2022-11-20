@@ -36,20 +36,6 @@ static bool switch_opt(int d) {
     return optMoved;
 }
 
-static bool menu_input_has_errors(menu_t *menu) {
-    bool hasError = false;
-
-    for (int i = 0; i < menu->size; i++) {
-        const menu_opt_t *opt = &menu->opts[i];
-
-        if (opt->textbox != NULL && opt->textbox->h == 0 && opt->textbox->input_required) {
-            hasError = opt->textbox->error = true;
-        }
-    }
-
-    return hasError;
-}
-
 static bool handle_keypress(int ch, bool *interrupt) {
     const menu_opt_t *selectedOpt = get_selected_menu_opt();
 
@@ -67,7 +53,7 @@ static bool handle_keypress(int ch, bool *interrupt) {
 
         case KEY_ENTER:
         case 10: {
-            if (selectedOpt->open != NULL && !menu_input_has_errors(gOpenMenu.menu)) {
+            if (selectedOpt->open != NULL) {
                 selectedOpt->open();
             }
 
@@ -125,4 +111,18 @@ bool init_menuscreen(menu_t *menu) {
     gScreen.drawFn = draw;
 
     return true;
+}
+
+bool menu_input_has_errors(menu_t *menu) {
+    bool hasError = false;
+
+    for (int i = 0; i < menu->size; i++) {
+        const menu_opt_t *opt = &menu->opts[i];
+
+        if (opt->textbox != NULL && opt->textbox->h == 0 && opt->textbox->input_required) {
+            hasError = opt->textbox->error = true;
+        }
+    }
+
+    return hasError;
 }

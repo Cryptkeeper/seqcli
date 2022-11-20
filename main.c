@@ -52,10 +52,12 @@ static void open_main_menu(void) {
 }
 
 static void create_sequence(void) {
-    char msg[1024];
-    snprintf(msg, sizeof(msg), "Your sequence file has been created: %s", gSequenceNameTextbox.input);
+    if (!menu_input_has_errors(&gCreateSequenceMenu)) {
+        char msg[1024];
+        snprintf(msg, sizeof(msg), "Your sequence file has been created: %s", gSequenceNameTextbox.input);
 
-    init_alert("Sequence created!", msg, open_main_menu);
+        init_alert("Sequence created!", msg, open_main_menu);
+    }
 }
 
 int main() {
