@@ -9,4 +9,5 @@ void init_color_pairs(void) {
     init_pair(PAIR_ERROR, COLOR_WHITE, COLOR_RED);
     init_pair(PAIR_CURSOR, COLOR_WHITE, COLOR_YELLOW);
     init_pair(PAIR_TYPING, COLOR_GREEN, COLOR_BLACK);
+    init_pair(PAIR_MENU_SELECTION, COLOR_YELLOW, COLOR_BLACK);
 }

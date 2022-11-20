@@ -4,29 +4,40 @@
 
 #include <ncurses.h>
 
+#include "colors.h"
+#include "fmt.h"
 #include "screen.h"
 
-static menu_t *gCurrentMenu;
+struct open_menu_t {
+    menu_t *menu;
+    int optIndex;
+};
 
-static int gCurrentOpt;
+static struct open_menu_t gOpenMenu;
+
+static inline const menu_opt_t *get_selected_menu_opt(void) {
+    return &gOpenMenu.menu->opts[gOpenMenu.optIndex];
+}
 
 static bool switch_opt(int d) {
-    int nextOpt = gCurrentOpt + d;
+    const int maxOpt = gOpenMenu.menu->size;
+
+    int nextOpt = gOpenMenu.optIndex + d;
 
     if (nextOpt < 0) {
-        nextOpt = gCurrentMenu->size - 1;
-    } else if (nextOpt >= gCurrentMenu->size) {
+        nextOpt = maxOpt - 1;
+    } else if (nextOpt >= maxOpt) {
         nextOpt = 0;
     }
 
-    const bool optMoved = gCurrentOpt != nextOpt;
-    gCurrentOpt = nextOpt;
+    const bool optMoved = gOpenMenu.optIndex != nextOpt;
+    gOpenMenu.optIndex = nextOpt;
 
     return optMoved;
 }
 
 static bool handle_keypress(int ch, bool *interrupt) {
-    const menu_opt_t *selectedOpt = &gCurrentMenu->opts[gCurrentOpt];
+    const menu_opt_t *selectedOpt = get_selected_menu_opt();
 
     // attempt to handle textbox input if activated
     if (selectedOpt->textbox != NULL && handle_textbox_input(selectedOpt->textbox, ch)) {
@@ -55,14 +66,25 @@ static bool handle_keypress(int ch, bool *interrupt) {
 }
 
 static void draw(void) {
-    addstr(gCurrentMenu->title);
-    addch('\n');
+    fbreak();
 
-    for (int i = 0; i < gCurrentMenu->size; i++) {
-        const menu_opt_t *opt = &gCurrentMenu->opts[i];
+    findent();
+    fcoloron(PAIR_HIGHLIGHT);
+    addstr(gOpenMenu.menu->title);
+    fnocolor(PAIR_HIGHLIGHT);
 
-        addch(i + '0');
-        addstr(". ");
+    fnewline();
+
+    for (int i = 0; i < gOpenMenu.menu->size; i++) {
+        const menu_opt_t *opt = &gOpenMenu.menu->opts[i];
+        const bool isSelected = gOpenMenu.optIndex == i;
+
+        if (isSelected) {
+            fselected();
+        } else {
+            findent();
+        }
+
         addstr(opt->name);
 
         if (opt->textbox != NULL) {
@@ -70,38 +92,23 @@ static void draw(void) {
             draw_textbox(opt->textbox);
         }
 
-        if (i == gCurrentOpt) {
-            addstr(" *");
-        }
-
-        addch('\n');
-    }
-}
-
-static void clear_all_textboxes(menu_t *menu) {
-    for (int i = 0; i < menu->size; i++) {
-        menu_opt_t opt = menu->opts[i];
-
-        if (opt.textbox != NULL) {
-            clear_textbox(opt.textbox);
+        for (int row = 0; row <= opt->rowpad; row++) {
+            fbreak();
         }
     }
 }
 
 static void set_current_menu(menu_t *menu) {
-    gCurrentMenu = menu;
-    gCurrentOpt = 0;
-
-    clear_all_textboxes(menu);
+    gOpenMenu.menu = menu;
+    gOpenMenu.optIndex = 0;
 }
 
-bool init_menuscreen(struct screen_t *screen, menu_t *menu) {
+bool init_menuscreen(menu_t *menu) {
     set_current_menu(menu);
 
     // bind internal menu calls back to screen controller
-    screen->title = menu->title;
-    screen->keypressFn = handle_keypress;
-    screen->drawFn = draw;
+    gCurrentScreen.keypressFn = handle_keypress;
+    gCurrentScreen.drawFn = draw;
 
     return true;
 }

@@ -8,6 +8,6 @@ if (APPLE)
     link_directories(/usr/local/lib)
 endif ()
 
-add_executable(seqcli main.c cursor.c cursor.h colors.c colors.h grid.h grid.c select.c select.h viewport.c viewport.h brightness.h brightness.c screen.h gridscreen.c gridscreen.h menu.c menu.h textbox.c textbox.h)
+add_executable(seqcli main.c cursor.c cursor.h colors.c colors.h grid.h grid.c select.c select.h viewport.c viewport.h brightness.h brightness.c screen.h gridscreen.c gridscreen.h menu.c menu.h textbox.c textbox.h seqfile.c seqfile.h alert.c alert.h screen.c fmt.h)
 
 target_link_libraries(seqcli ncurses)

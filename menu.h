@@ -5,12 +5,13 @@
 
 #include "textbox.h"
 
-struct screen_t;
+typedef void (*menu_callback_t)(void);
 
 typedef struct menu_opt_t {
     char *name;
     struct textbox_t *textbox;
-    void (*open)(void);
+    menu_callback_t open;
+    int rowpad;
 } menu_opt_t;
 
 typedef struct menu_t {
@@ -19,6 +20,6 @@ typedef struct menu_t {
     int size;
 } menu_t;
 
-bool init_menuscreen(struct screen_t *screen, menu_t *menu);
+bool init_menuscreen(menu_t *menu);
 
 #endif//SEQCLI_MENU_H

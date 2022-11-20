@@ -1,8 +1,8 @@
 #ifndef SEQCLI_GRIDSCREEN_H
 #define SEQCLI_GRIDSCREEN_H
 
-#include "screen.h"
+#include <stdbool.h>
 
-bool init_gridscreen(struct screen_t *screen, const char *filepath);
+bool init_gridscreen(void);
 
 #endif//SEQCLI_GRIDSCREEN_H

@@ -8,6 +8,7 @@
 #include "colors.h"
 #include "cursor.h"
 #include "grid.h"
+#include "screen.h"
 #include "select.h"
 #include "viewport.h"
 
@@ -241,10 +242,10 @@ static void draw(void) {
            redrawCounter, gCursorRow, gCursorCol, gSelection.active, gViewportRow, gViewportCol, maxRow, maxCol);
 }
 
-bool init_gridscreen(struct screen_t *screen, const char *filepath) {
-    screen->title = filepath;
-    screen->keypressFn = handle_keypress;
-    screen->drawFn = draw;
+bool init_gridscreen(void) {
+    // bind internal menu calls back to screen controller
+    gCurrentScreen.keypressFn = handle_keypress;
+    gCurrentScreen.drawFn = draw;
 
     return true;
 }

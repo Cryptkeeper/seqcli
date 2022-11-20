@@ -2,31 +2,34 @@
 
 #include <ncurses.h>
 
+#include "alert.h"
 #include "colors.h"
 #include "gridscreen.h"
 #include "menu.h"
 #include "screen.h"
 
-static struct screen_t gCurrentScreen;
-
 static void open_main_menu(void);
 
+static void create_sequence(void);
+
+static struct textbox_t gSequenceNameTextbox;
 static struct textbox_t gMusicFileTextbox;
 
 menu_opt_t gCreateSequenceMenuOpts[] = {
-        {.name = "Select mp3 file", .textbox = &gMusicFileTextbox},
-        {.name = "No music"},
+        {.name = "Sequence name", .textbox = &gSequenceNameTextbox},
+        {.name = "Music filepath", .textbox = &gMusicFileTextbox, .rowpad = 1},
+        {.name = "Create sequence", .open = create_sequence, .rowpad = 2},
         {.name = "Return to main menu", .open = open_main_menu},
 };
 
 menu_t gCreateSequenceMenu = {
         .title = "Create new sequence",
         .opts = gCreateSequenceMenuOpts,
-        .size = 3,
+        .size = 4,
 };
 
 static void open_create_sequence_menu(void) {
-    init_menuscreen(&gCurrentScreen, &gCreateSequenceMenu);
+    init_menuscreen(&gCreateSequenceMenu);
 }
 
 menu_opt_t gMainMenuOpts[] = {
@@ -41,7 +44,14 @@ menu_t gMainMenu = {
 };
 
 static void open_main_menu(void) {
-    init_menuscreen(&gCurrentScreen, &gMainMenu);
+    init_menuscreen(&gMainMenu);
+}
+
+static void create_sequence(void) {
+    char msg[1024];
+    snprintf(msg, sizeof(msg), "Your sequence file has been created: %s", gSequenceNameTextbox.input);
+
+    init_alert("Sequence created!", msg, open_main_menu);
 }
 
 int main() {
