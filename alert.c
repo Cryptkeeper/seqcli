@@ -4,13 +4,12 @@
 
 #include "colors.h"
 #include "fmt.h"
-#include "menu.h"
 #include "screen.h"
 
 struct alert_t {
     const char *title;
     const char *msg;
-    menu_callback_t callback;
+    alert_callback_t callback;
 };
 
 static struct alert_t gCurrentAlert;
@@ -44,7 +43,7 @@ static void draw(void) {
     fbreak();
 }
 
-bool init_alert(const char *title, const char *msg, menu_callback_t callback) {
+bool init_alert(const char *title, const char *msg, alert_callback_t callback) {
     gCurrentAlert.title = title;
     gCurrentAlert.msg = msg;
     gCurrentAlert.callback = callback;
