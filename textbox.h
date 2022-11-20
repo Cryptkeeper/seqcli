@@ -7,9 +7,11 @@ struct textbox_t {
     bool is_typing;
     char input[256];
     int h;
+    bool input_required;
+    bool error;
 };
 
-void draw_textbox(const struct textbox_t *textbox);
+void draw_textbox(struct textbox_t *textbox);
 
 bool handle_textbox_input(struct textbox_t *textbox, int ch);
 

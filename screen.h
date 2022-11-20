@@ -12,6 +12,6 @@ struct screen_t {
     draw_fn_t drawFn;
 };
 
-extern struct screen_t gCurrentScreen;
+extern struct screen_t gScreen;
 
 #endif//SEQCLI_SCREEN_H

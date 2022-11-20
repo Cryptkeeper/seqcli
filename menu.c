@@ -107,8 +107,22 @@ bool init_menuscreen(menu_t *menu) {
     set_current_menu(menu);
 
     // bind internal menu calls back to screen controller
-    gCurrentScreen.keypressFn = handle_keypress;
-    gCurrentScreen.drawFn = draw;
+    gScreen.keypressFn = handle_keypress;
+    gScreen.drawFn = draw;
 
     return true;
+}
+
+bool menu_input_has_errors(menu_t *menu) {
+    bool hasError = false;
+
+    for (int i = 0; i < menu->size; i++) {
+        const menu_opt_t *opt = &menu->opts[i];
+
+        if (opt->textbox != NULL && opt->textbox->h == 0 && opt->textbox->input_required) {
+            hasError = opt->textbox->error = true;
+        }
+    }
+
+    return hasError;
 }

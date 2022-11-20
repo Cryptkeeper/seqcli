@@ -12,8 +12,12 @@ static void open_main_menu(void);
 
 static void create_sequence(void);
 
-static struct textbox_t gSequenceNameTextbox;
-static struct textbox_t gMusicFileTextbox;
+static struct textbox_t gSequenceNameTextbox = {
+        .input_required = true,
+};
+static struct textbox_t gMusicFileTextbox = {
+        .input_required = true,
+};
 
 menu_opt_t gCreateSequenceMenuOpts[] = {
         {.name = "Sequence name", .textbox = &gSequenceNameTextbox},
@@ -48,10 +52,12 @@ static void open_main_menu(void) {
 }
 
 static void create_sequence(void) {
-    char msg[1024];
-    snprintf(msg, sizeof(msg), "Your sequence file has been created: %s", gSequenceNameTextbox.input);
+    if (!menu_input_has_errors(&gCreateSequenceMenu)) {
+        char msg[1024];
+        snprintf(msg, sizeof(msg), "Your sequence file has been created: %s", gSequenceNameTextbox.input);
 
-    init_alert("Sequence created!", msg, open_main_menu);
+        init_alert("Sequence created!", msg, open_main_menu);
+    }
 }
 
 int main() {
@@ -75,7 +81,7 @@ int main() {
 
 redrawScreen:
     clear();
-    gCurrentScreen.drawFn();
+    gScreen.drawFn();
 
     refresh();
 
@@ -84,7 +90,7 @@ redrawScreen:
         ch = wgetch(curscr);
 
         bool interrupt = false;
-        bool redraw = gCurrentScreen.keypressFn(ch, &interrupt);
+        bool redraw = gScreen.keypressFn(ch, &interrupt);
 
         if (interrupt) goto exit;
         if (redraw) goto redrawScreen;

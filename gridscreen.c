@@ -244,8 +244,8 @@ static void draw(void) {
 
 bool init_gridscreen(void) {
     // bind internal menu calls back to screen controller
-    gCurrentScreen.keypressFn = handle_keypress;
-    gCurrentScreen.drawFn = draw;
+    gScreen.keypressFn = handle_keypress;
+    gScreen.drawFn = draw;
 
     return true;
 }

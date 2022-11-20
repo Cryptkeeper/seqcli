@@ -6,8 +6,14 @@
 
 #include "colors.h"
 
-void draw_textbox(const struct textbox_t *textbox) {
-    color_pair_t activePair = textbox->is_typing ? PAIR_TYPING : PAIR_INVERTED;
+void draw_textbox(struct textbox_t *textbox) {
+    color_pair_t activePair = PAIR_INVERTED;
+
+    if (textbox->is_typing) {
+        activePair = PAIR_TYPING;
+    } else if (textbox->error) {
+        activePair = PAIR_ERROR;
+    }
 
     attron(COLOR_PAIR(activePair));
 
@@ -26,6 +32,9 @@ static inline bool is_printable_char(int ch) {
 
 bool handle_textbox_input(struct textbox_t *textbox, int ch) {
     if (ch == KEY_ENTER || ch == 10) {
+        // always consume error indicator state once interacted with
+        textbox->error = false;
+
         textbox->is_typing = !textbox->is_typing;
 
         return true;

@@ -22,4 +22,6 @@ typedef struct menu_t {
 
 bool init_menuscreen(menu_t *menu);
 
+bool menu_input_has_errors(menu_t *menu);
+
 #endif//SEQCLI_MENU_H

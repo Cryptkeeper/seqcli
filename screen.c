@@ -1,3 +1,3 @@
 #include "screen.h"
 
-struct screen_t gCurrentScreen;
+struct screen_t gScreen;

@@ -50,8 +50,8 @@ bool init_alert(const char *title, const char *msg, menu_callback_t callback) {
     gCurrentAlert.callback = callback;
 
     // bind internal menu calls back to screen controller
-    gCurrentScreen.keypressFn = handle_keypress;
-    gCurrentScreen.drawFn = draw;
+    gScreen.keypressFn = handle_keypress;
+    gScreen.drawFn = draw;
 
     return true;
 }
