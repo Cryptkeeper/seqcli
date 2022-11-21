@@ -31,9 +31,9 @@ void move_cursor_into_viewport(void) {
 }
 
 static bool test_cursor_at(int row, int col) {
-    if (row < 0 || row >= gRowCount) {
+    if (row < 0 || row >= gGrid.rowCount) {
         return false;
-    } else if (col < 0 || col >= gColCount) {
+    } else if (col < 0 || col >= gGrid.colCount) {
         return false;
     } else {
         return true;
@@ -55,7 +55,7 @@ static bool wrap_cursor(int rd) {
     if (rd == 0) return false;
 
     if (rd < 0) {
-        gCursorRow = gRowCount - 1;
+        gCursorRow = gGrid.rowCount - 1;
     } else /* if (rd > 0) */ {
         gCursorRow = 0;
     }
