@@ -67,6 +67,8 @@ int main() {
         return 1;
     }
 
+    gGrid = grid;
+
     /*if (!init_gridscreen(&gCurrentScreen, "testfile.seq")) {
         return 1;
     }*/

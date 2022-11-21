@@ -27,8 +27,6 @@ grid_t *alloc_grid(int rows, int cols) {
     grid->rowData = rowData;
     grid->outputs = outputs;
 
-    gGrid = grid;
-
 ok:
     return grid;
 
