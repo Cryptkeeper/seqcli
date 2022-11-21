@@ -22,7 +22,11 @@ typedef struct grid_t {
     output_t *outputs;
 } grid_t;
 
-extern grid_t gGrid;
+extern grid_t *gGrid;
+
+grid_t *alloc_grid(int rows, int cols);
+
+void dealloc_grid(grid_t *grid);
 
 output_t *get_output(int row, int col);
 

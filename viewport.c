@@ -15,19 +15,19 @@ void get_viewport_limits(int *maxRow, int *maxCol) {
     x -= gLabelColWidth;
 
     int rowLimit = gViewportRow + y;
-    if (rowLimit > gGrid.rowCount) rowLimit = gGrid.rowCount;
+    if (rowLimit > gGrid->rowCount) rowLimit = gGrid->rowCount;
 
     int colLimit = gViewportCol + x;
-    if (colLimit > gGrid.colCount) colLimit = gGrid.colCount;
+    if (colLimit > gGrid->colCount) colLimit = gGrid->colCount;
 
     *maxRow = rowLimit;
     *maxCol = colLimit;
 }
 
 static bool test_viewport_at(int row, int col) {
-    if (row < 0 || row >= gGrid.rowCount) {
+    if (row < 0 || row >= gGrid->rowCount) {
         return false;
-    } else if (col < 0 || col >= gGrid.colCount) {
+    } else if (col < 0 || col >= gGrid->colCount) {
         return false;
     } else {
         return true;

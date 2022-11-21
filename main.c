@@ -4,6 +4,7 @@
 
 #include "alert.h"
 #include "colors.h"
+#include "grid.h"
 #include "gridscreen.h"
 #include "menu.h"
 #include "screen.h"
@@ -61,6 +62,11 @@ static void create_sequence(void) {
 }
 
 int main() {
+    grid_t *grid = alloc_grid(32, 128);
+    if (grid == NULL) {
+        return 1;
+    }
+
     /*if (!init_gridscreen(&gCurrentScreen, "testfile.seq")) {
         return 1;
     }*/
