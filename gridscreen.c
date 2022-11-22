@@ -132,17 +132,7 @@ static bool handle_keypress(int ch, bool *interrupt) {
 }
 
 static chtype get_output_icon(output_t *output) {
-    if (output->data == 0) {
-        return ' ';
-    }
-
-    for (int i = 1; i < sizeof(gBrightnessLevels); i++) {
-        if (gBrightnessLevels[i] == output->data) {
-            return i + '0';
-        }
-    }
-
-    return '?';
+    return get_brightness_icon(output->data);
 }
 
 static chtype get_row_icon(int row) {

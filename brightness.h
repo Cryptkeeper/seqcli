@@ -3,6 +3,10 @@
 
 #include <stdint.h>
 
-extern uint8_t gBrightnessLevels[10];
+#define gBrightnessLevelsCount 10
+
+extern uint8_t gBrightnessLevels[gBrightnessLevelsCount];
+
+unsigned int /* chtype */ get_brightness_icon(uint8_t brightness);
 
 #endif//SEQCLI_BRIGHTNESS_H
